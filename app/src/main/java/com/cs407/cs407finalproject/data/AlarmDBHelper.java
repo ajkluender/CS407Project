@@ -39,15 +39,15 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLUMN_HOUR + " INTEGER," +
                     COLUMN_MINUTE + " INTEGER," +
-                    COLUMN_IS_RECURRING + " BOOLEAN," +
-                    COLUMN_IS_ON + " BOOLEAN," +
-                    COLUMN_MONDAY + " BOOLEAN," +
-                    COLUMN_TUESDAY + " BOOLEAN," +
-                    COLUMN_WEDNESDAY + " BOOLEAN," +
-                    COLUMN_THURSDAY + " BOOLEAN," +
-                    COLUMN_FRIDAY + " BOOLEAN," +
-                    COLUMN_SATURDAY + " BOOLEAN," +
-                    COLUMN_SUNDAY + " BOOLEAN," +
+                    COLUMN_IS_RECURRING + " INTEGER," +
+                    COLUMN_IS_ON + " INTEGER," +
+                    COLUMN_MONDAY + " INTEGER," +
+                    COLUMN_TUESDAY + " INTEGER," +
+                    COLUMN_WEDNESDAY + " INTEGER," +
+                    COLUMN_THURSDAY + " INTEGER," +
+                    COLUMN_FRIDAY + " INTEGER," +
+                    COLUMN_SATURDAY + " INTEGER," +
+                    COLUMN_SUNDAY + " INTEGER," +
                     COLUMN_TITLE + " TEXT," +
                     COLUMN_CHALLENGE_TYPE + " TEXT)";
 
@@ -82,17 +82,17 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         // Don't put id, as it's autoincrement
         values.put(COLUMN_HOUR, alarm.getHour());
         values.put(COLUMN_MINUTE, alarm.getMinute());
-        values.put(COLUMN_IS_RECURRING, alarm.isRecurring());
-        values.put(COLUMN_IS_ON, alarm.isOn());
-        values.put(COLUMN_MONDAY, alarm.isMonday());
 
-        values.put(COLUMN_TUESDAY, alarm.isTuesday());
-        values.put(COLUMN_WEDNESDAY, alarm.isWednesday());
-        values.put(COLUMN_THURSDAY, alarm.isThursday());
-        values.put(COLUMN_FRIDAY, alarm.isFriday());
-        values.put(COLUMN_SATURDAY, alarm.isSaturday());
+        values.put(COLUMN_IS_RECURRING, alarm.isRecurring() ? 1 : 0);
+        values.put(COLUMN_IS_ON, alarm.isOn() ? 1 : 0);
+        values.put(COLUMN_MONDAY, alarm.isMonday() ? 1 : 0);
+        values.put(COLUMN_TUESDAY, alarm.isTuesday() ? 1 : 0);
+        values.put(COLUMN_WEDNESDAY, alarm.isWednesday() ? 1 : 0);
+        values.put(COLUMN_THURSDAY, alarm.isThursday() ? 1 : 0);
+        values.put(COLUMN_FRIDAY, alarm.isFriday() ? 1 : 0);
+        values.put(COLUMN_SATURDAY, alarm.isSaturday() ? 1 : 0);
+        values.put(COLUMN_SUNDAY, alarm.isSunday() ? 1 : 0);
 
-        values.put(COLUMN_SUNDAY, alarm.isSunday());
         values.put(COLUMN_TITLE, alarm.getTitle());
         values.put(COLUMN_CHALLENGE_TYPE, alarm.getChallengeType());
 
@@ -107,17 +107,16 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_HOUR, alarm.getHour());
         values.put(COLUMN_MINUTE, alarm.getMinute());
-        values.put(COLUMN_IS_RECURRING, alarm.isRecurring());
-        values.put(COLUMN_IS_ON, alarm.isOn());
-        values.put(COLUMN_MONDAY, alarm.isMonday());
 
-        values.put(COLUMN_TUESDAY, alarm.isTuesday());
-        values.put(COLUMN_WEDNESDAY, alarm.isWednesday());
-        values.put(COLUMN_THURSDAY, alarm.isThursday());
-        values.put(COLUMN_FRIDAY, alarm.isFriday());
-        values.put(COLUMN_SATURDAY, alarm.isSaturday());
-
-        values.put(COLUMN_SUNDAY, alarm.isSunday());
+        values.put(COLUMN_IS_RECURRING, alarm.isRecurring() ? 1 : 0);
+        values.put(COLUMN_IS_ON, alarm.isOn() ? 1 : 0);
+        values.put(COLUMN_MONDAY, alarm.isMonday() ? 1 : 0);
+        values.put(COLUMN_TUESDAY, alarm.isTuesday() ? 1 : 0);
+        values.put(COLUMN_WEDNESDAY, alarm.isWednesday() ? 1 : 0);
+        values.put(COLUMN_THURSDAY, alarm.isThursday() ? 1 : 0);
+        values.put(COLUMN_FRIDAY, alarm.isFriday() ? 1 : 0);
+        values.put(COLUMN_SATURDAY, alarm.isSaturday() ? 1 : 0);
+        values.put(COLUMN_SUNDAY, alarm.isSunday() ? 1 : 0);
 
         values.put(COLUMN_TITLE, alarm.getTitle());
         values.put(COLUMN_CHALLENGE_TYPE, alarm.getChallengeType());
