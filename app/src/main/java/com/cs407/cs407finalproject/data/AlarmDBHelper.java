@@ -28,18 +28,44 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
     //END DAYS
     private static final String COLUMN_CHALLENGE_TYPE = "challengeType";
 
+    private static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + TABLE_NAME + " (" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_HOUR + " INTEGER," +
+                    COLUMN_MINUTE + " INTEGER," +
+                    COLUMN_IS_RECURRING + " BOOLEAN," +
+                    COLUMN_IS_ON + " BOOLEAN," +
+                    COLUMN_MONDAY + " BOOLEAN," +
+                    COLUMN_TUESDAY + " BOOLEAN," +
+                    COLUMN_WEDNESDAY + " BOOLEAN," +
+                    COLUMN_THURSDAY + " BOOLEAN," +
+                    COLUMN_FRIDAY + " BOOLEAN," +
+                    COLUMN_SATURDAY + " BOOLEAN," +
+                    COLUMN_SUNDAY + " BOOLEAN," +
+                    COLUMN_CHALLENGE_TYPE + " TEXT)";
 
-    public AlarmDBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + TABLE_NAME;
+
+    public AlarmDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // This database is only a cache for online data, so its upgrade policy is
+        // to simply to discard the data and start over
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
     }
+
+    // Add methods to insert, update, delete, and retrieve alarms
+    
 }
