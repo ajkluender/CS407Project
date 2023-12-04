@@ -136,6 +136,44 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public Alarm getAlarmById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int alarmId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            int hour = cursor.getInt(cursor.getColumnIndex(COLUMN_HOUR));
+            int minute = cursor.getInt(cursor.getColumnIndex(COLUMN_MINUTE));
+            boolean isRecurring = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_RECURRING)) == 1;
+            boolean isOn = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_ON)) == 1;
+
+            boolean monday = cursor.getInt(cursor.getColumnIndex(COLUMN_MONDAY)) == 1;
+
+            boolean tuesday = cursor.getInt(cursor.getColumnIndex(COLUMN_TUESDAY)) == 1;
+            boolean wednesday = cursor.getInt(cursor.getColumnIndex(COLUMN_WEDNESDAY)) == 1;
+            boolean thursday = cursor.getInt(cursor.getColumnIndex(COLUMN_THURSDAY)) == 1;
+            boolean friday = cursor.getInt(cursor.getColumnIndex(COLUMN_FRIDAY)) == 1;
+            boolean saturday = cursor.getInt(cursor.getColumnIndex(COLUMN_SATURDAY)) == 1;
+
+            boolean sunday = cursor.getInt(cursor.getColumnIndex(COLUMN_SUNDAY)) == 1;
+
+            String title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE));
+            String challengeType = cursor.getString(cursor.getColumnIndex(COLUMN_CHALLENGE_TYPE));
+
+            Alarm alarm = new Alarm(alarmId, hour, minute, title, challengeType, isOn, isRecurring,
+                    monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+            cursor.close();
+            db.close();
+            return alarm;
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+        return null; // Return null if alarm is not found
+    }
+
     public List<Alarm> getAllAlarms() {
         List<Alarm> alarms = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
