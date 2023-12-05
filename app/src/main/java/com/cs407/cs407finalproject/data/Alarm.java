@@ -8,12 +8,12 @@ public class Alarm {
     private boolean isOn;
     private boolean monday, tuesday, wednesday,
             thursday, friday, saturday, sunday;
-    private String challengeType;
+    private int challengeType;
     private String title;
 
     // Constructor
     public Alarm(int alarmId, int hour, int minute, String title,
-                 String challengeType, boolean isOn, boolean isRecurring, boolean monday, boolean tuesday,
+                 int challengeType, boolean isOn, boolean isRecurring, boolean monday, boolean tuesday,
                  boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
         this.alarmId = alarmId;
         this.hour = hour;
@@ -50,7 +50,7 @@ public class Alarm {
         return title;
     }
 
-    public String getChallengeType() {
+    public int getChallengeType() {
         return challengeType;
     }
 
@@ -107,7 +107,7 @@ public class Alarm {
         this.title = title;
     }
 
-    public void setChallengeType(String challengeType) {
+    public void setChallengeType(int challengeType) {
         this.challengeType = challengeType;
     }
 

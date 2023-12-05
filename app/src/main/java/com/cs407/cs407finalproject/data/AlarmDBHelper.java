@@ -49,7 +49,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                     COLUMN_SATURDAY + " INTEGER," +
                     COLUMN_SUNDAY + " INTEGER," +
                     COLUMN_TITLE + " TEXT," +
-                    COLUMN_CHALLENGE_TYPE + " TEXT)";
+                    COLUMN_CHALLENGE_TYPE + " INTEGER)";
 
 
     private static final String SQL_DELETE_ENTRIES =
@@ -158,7 +158,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
             boolean sunday = cursor.getInt(cursor.getColumnIndex(COLUMN_SUNDAY)) == 1;
 
             String title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE));
-            String challengeType = cursor.getString(cursor.getColumnIndex(COLUMN_CHALLENGE_TYPE));
+            int challengeType = cursor.getInt(cursor.getColumnIndex(COLUMN_CHALLENGE_TYPE));
 
             Alarm alarm = new Alarm(alarmId, hour, minute, title, challengeType, isOn, isRecurring,
                     monday, tuesday, wednesday, thursday, friday, saturday, sunday);
@@ -197,7 +197,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                 boolean sunday = cursor.getInt(cursor.getColumnIndex(COLUMN_SUNDAY)) == 1;
 
                 String title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE));
-                String challengeType = cursor.getString(cursor.getColumnIndex(COLUMN_CHALLENGE_TYPE));
+                int challengeType = cursor.getInt(cursor.getColumnIndex(COLUMN_CHALLENGE_TYPE));
 
                 // Assuming you have a constructor in your Alarm class that matches this signature
                 Alarm alarm = new Alarm(alarmId, hour, minute, title, challengeType, isOn, isRecurring,

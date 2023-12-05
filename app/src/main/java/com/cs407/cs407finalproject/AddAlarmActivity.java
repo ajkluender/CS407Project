@@ -12,6 +12,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
+
         dbHelper = new AlarmDBHelper(AddAlarmActivity.this);
 
         if (getIntent().hasExtra("ALARM_ID")) {
@@ -40,6 +43,7 @@ public class AddAlarmActivity extends AppCompatActivity {
                 }
             }
         }
+
         LinearLayout recurringDates = findViewById(R.id.recurringDates);
         CheckBox recurringAlarm = findViewById(R.id.recurringAlarm);
         recurringAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -53,23 +57,19 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
         });
 
-        FragmentContainerView fragmentContainerView = findViewById(R.id.fragmentContainerView);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        RadioGroup allChallenges = findViewById(R.id.allChallenges);
         CheckBox addChallenge = findViewById(R.id.addChallenge);
         addChallenge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    fragmentContainerView.setVisibility(View.VISIBLE);
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainerView, AddChallengeFragment.class, null)
-                            .setReorderingAllowed(true)
-                            .commit();
+                    allChallenges.setVisibility(View.VISIBLE);
                 } else {
-                    fragmentContainerView.setVisibility(View.GONE);
+                    allChallenges.setVisibility(View.GONE);
                 }
             }
         });
+
         Button saveAlarm = findViewById(R.id.saveAlarm);
         saveAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,6 @@ public class AddAlarmActivity extends AppCompatActivity {
                 EditText alarmNameEditText = findViewById(R.id.alarmName);
                 String title = alarmNameEditText.getText().toString();
 
-
                 boolean isOn = true; // A new alarm is on by default
                 boolean isRecurring = recurringAlarm.isChecked();
                 boolean monday = ((CheckBox) findViewById(R.id.checkMon)).isChecked();
@@ -90,11 +89,28 @@ public class AddAlarmActivity extends AppCompatActivity {
                 boolean friday = ((CheckBox) findViewById(R.id.checkFri)).isChecked();
                 boolean saturday = ((CheckBox) findViewById(R.id.checkSat)).isChecked();
                 boolean sunday = ((CheckBox) findViewById(R.id.checkSun)).isChecked();
-                String challengeType = "none"; //replace this when we integrate challenges
 
+                int challengeType = -1;
+                CheckBox addChallenge = findViewById(R.id.addChallenge);
+                RadioButton button1 = findViewById(R.id.button1);
+                RadioButton button2 = findViewById(R.id.button2);
+                RadioButton button3 = findViewById(R.id.button3);
+                RadioButton button4 = findViewById(R.id.button4);
+                if (addChallenge.isChecked()) {
+                    if (button1.isChecked()) {
+                        challengeType = 1;
+                    } else if (button2.isChecked()) {
+                        challengeType = 2;
+                    } else if (button3.isChecked()) {
+                        challengeType = 3;
+                    } else if (button4.isChecked()) {
+                        challengeType = 4;
+                    }
+                } else {
+                    challengeType = -1;
+                }
 
                 int alarmId = isEditing ? currentAlarm.getAlarmId() : 0;
-
                 Alarm newAlarm = new Alarm(alarmId, hour, minute, title, challengeType, isOn, isRecurring,
                         monday, tuesday, wednesday,thursday, friday,saturday, sunday);
                 AlarmDBHelper dbHelper = new AlarmDBHelper(AddAlarmActivity.this);
@@ -127,6 +143,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
         });
     }
+
     private void populateUIWithAlarmData(Alarm alarm) {
         TimePicker timePicker = findViewById(R.id.timePickerUser);
         timePicker.setHour(alarm.getHour());
@@ -137,6 +154,7 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         CheckBox recurringAlarm = findViewById(R.id.recurringAlarm);
         recurringAlarm.setChecked(alarm.isRecurring());
+
         LinearLayout recurringDates = findViewById(R.id.recurringDates);
         recurringDates.setVisibility(alarm.isRecurring() ? View.VISIBLE : View.GONE);
 
@@ -161,9 +179,22 @@ public class AddAlarmActivity extends AppCompatActivity {
         CheckBox sunday = findViewById(R.id.checkSun);
         sunday.setChecked(alarm.isSunday());
 
-
         CheckBox addChallenge = findViewById(R.id.addChallenge);
-        FragmentContainerView fragmentContainerView = findViewById(R.id.fragmentContainerView);
+        addChallenge.setChecked(alarm.getChallengeType() != -1);
 
+        RadioGroup allChallenges = findViewById(R.id.allChallenges);
+        allChallenges.setVisibility((alarm.getChallengeType() != -1) ? View.VISIBLE : View.GONE);
+
+        RadioButton button1 = findViewById(R.id.button1);
+        button1.setChecked(alarm.getChallengeType() == 1);
+
+        RadioButton button2 = findViewById(R.id.button2);
+        button2.setChecked(alarm.getChallengeType() == 2);
+
+        RadioButton button3 = findViewById(R.id.button3);
+        button3.setChecked(alarm.getChallengeType() == 3);
+
+        RadioButton button4 = findViewById(R.id.button4);
+        button4.setChecked(alarm.getChallengeType() == 4);
     }
 }

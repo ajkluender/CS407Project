@@ -104,16 +104,44 @@
             android:layout_height="wrap_content"
             android:text="Add Challenge" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
-            android:name="com.cs407.cs407finalproject.AddChallengeFragment"
+        <RadioGroup
+            android:id="@+id/allChallenges"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addChallenge"
-            android:layout_marginTop="16dp" />
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenge 1"
+                android:textSize="16dp"/>
+
+            <RadioButton
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenge 2"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenge 3"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenge 4"
+                android:textSize="16dp" />
+
+        </RadioGroup>
 
     </LinearLayout>
 
