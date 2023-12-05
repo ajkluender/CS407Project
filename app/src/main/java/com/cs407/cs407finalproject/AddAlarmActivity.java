@@ -116,19 +116,16 @@ public class AddAlarmActivity extends AppCompatActivity {
         });
 
         Button deleteAlarm = findViewById(R.id.deleteAlarm);
-        if (isEditing) {
-            deleteAlarm.setVisibility(View.VISIBLE);
-            deleteAlarm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        deleteAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentAlarm != null) {
                     dbHelper.deleteAlarm(currentAlarm.getAlarmId());
-                    Toast.makeText(AddAlarmActivity.this, "Alarm Deleted", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
-            });
-        } else {
-            deleteAlarm.setVisibility(View.GONE);
-        }
+                Toast.makeText(AddAlarmActivity.this, "Alarm Deleted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
     private void populateUIWithAlarmData(Alarm alarm) {
         TimePicker timePicker = findViewById(R.id.timePickerUser);
