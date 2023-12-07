@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,21 +61,20 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(@NonNull SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
-    // Add methods to insert, update, delete, and retrieve alarms
 
-    public long insertAlarm(Alarm alarm) {
+    public long insertAlarm(@NonNull Alarm alarm) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -101,7 +100,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         // returns -1 if there was an error
         return id;
     }
-    public int updateAlarm(Alarm alarm) {
+    public int updateAlarm(@NonNull Alarm alarm) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -199,7 +198,6 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                 String title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE));
                 int challengeType = cursor.getInt(cursor.getColumnIndex(COLUMN_CHALLENGE_TYPE));
 
-                // Assuming you have a constructor in your Alarm class that matches this signature
                 Alarm alarm = new Alarm(alarmId, hour, minute, title, challengeType, isOn, isRecurring,
                         monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 

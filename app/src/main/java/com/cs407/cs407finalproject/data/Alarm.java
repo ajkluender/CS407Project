@@ -1,5 +1,12 @@
 package com.cs407.cs407finalproject.data;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+import com.cs407.cs407finalproject.AlarmBroadcastReceiver;
+
 public class Alarm {
     private int alarmId;
     private int hour;
@@ -145,5 +152,38 @@ public class Alarm {
 
     public void setSunday(boolean sunday) {
         this.sunday = sunday;
+    }
+
+    private static long getAlarmStartTime(Alarm alarm) {
+        long startTime = 0;
+        // Calculate the start time for the alarm
+        // This should return the time in milliseconds
+        // Use Calendar class to help with this calculation
+        //he calculation differs based on whether the alarm is recurring or one-time.
+
+        return startTime;
+    }
+    public static void scheduleAlarm(Context context, Alarm alarm){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+
+        //Passing all alarm data
+        //Do this for other data ie recurring and title and challenge
+        intent.putExtra("ALARM_ID", alarm.getAlarmId());
+
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long alarmStartTime = getAlarmStartTime(alarm);
+
+        if (alarm.isRecurring()) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime,
+                    AlarmManager.INTERVAL_DAY, pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
+        }
+
+
     }
 }
