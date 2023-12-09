@@ -117,28 +117,28 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Challenge 1"
+                android:text="Addition"
                 android:textSize="16dp"/>
 
             <RadioButton
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Challenge 2"
+                android:text="Multiplication"
                 android:textSize="16dp" />
 
             <RadioButton
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Challenge 3"
+                android:text="Sequence"
                 android:textSize="16dp" />
 
             <RadioButton
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Challenge 4"
+                android:text="Square"
                 android:textSize="16dp" />
 
         </RadioGroup>

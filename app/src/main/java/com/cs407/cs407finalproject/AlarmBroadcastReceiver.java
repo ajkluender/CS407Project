@@ -61,8 +61,8 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     private void startAlarmService(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, AlarmService.class);
         serviceIntent.putExtra("TITLE", intent.getStringExtra("TITLE"));
-        serviceIntent.putExtra("ALARM_ID", serviceIntent.getIntExtra("ALARM_ID", 0));
-        serviceIntent.putExtra("CHALLENGE", serviceIntent.getIntExtra("CHALLENGE", 0));
+        serviceIntent.putExtra("ALARM_ID", intent.getIntExtra("ALARM_ID", 0));
+        serviceIntent.putExtra("CHALLENGE", intent.getIntExtra("CHALLENGE", 0));
         context.startService(serviceIntent);
     }
 }

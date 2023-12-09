@@ -15,7 +15,8 @@ import androidx.core.app.NotificationCompat;
 
 public class AlarmService extends Service {
 
-    int challengeType = 0;
+    String title = "";
+    int challengeType = -1;
     int alarmId = 0;
 
     private static final String CHANNEL_ID = "AlarmServiceChannel";
@@ -23,16 +24,28 @@ public class AlarmService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        createNotificationChannel();
+
+        // replace these 3 lines with createNotificationChannel(); to revert changes
+        NotificationThread1 notificationThread1 = new NotificationThread1();
+        Thread thread = new Thread(notificationThread1);
+        thread.start();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("AlarmService", "onStartCommand triggered");
-        String title = intent.getStringExtra("TITLE");
-        challengeType = intent.getIntExtra("CHALLENGE", 0);
+        title = intent.getStringExtra("TITLE");
+        if (intent != null && intent.hasExtra("CHALLENGE")) {
+            challengeType = intent.getIntExtra("CHALLENGE", 0);
+        }
         Log.d("c1", "c1: " + challengeType);
-        sendNotification(title);
+        Log.d("t1", "t1: " + title);
+
+        // replace these 3 lines with sendNotification(title); to revert changes
+        NotificationThread2 notificationThread2 = new NotificationThread2(title);
+        Thread thread = new Thread(notificationThread2);
+        thread.start();
+
         return START_STICKY;
     }
 
@@ -74,5 +87,26 @@ public class AlarmService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    class NotificationThread1 implements Runnable {
+        @Override
+        public void run() {
+            createNotificationChannel();
+        }
+    }
+
+    class NotificationThread2 implements Runnable {
+
+        private String title;
+
+        public NotificationThread2(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public void run() {
+            sendNotification(title);
+        }
     }
 }
