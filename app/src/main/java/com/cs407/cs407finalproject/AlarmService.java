@@ -15,6 +15,9 @@ import androidx.core.app.NotificationCompat;
 
 public class AlarmService extends Service {
 
+    int challengeType = 0;
+    int alarmId = 0;
+
     private static final String CHANNEL_ID = "AlarmServiceChannel";
 
     @Override
@@ -25,19 +28,22 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         Log.d("AlarmService", "onStartCommand triggered");
-
         String title = intent.getStringExtra("TITLE");
-        Log.d("AlarmService", "Alarm Title: " + title);
+        challengeType = intent.getIntExtra("CHALLENGE", 0);
+        Log.d("c1", "c1: " + challengeType);
         sendNotification(title);
         return START_STICKY;
     }
+
     private void sendNotification(String title) {
         Intent intent = new Intent(AlarmService.this, AlarmRingActivity.class);
-        intent.putExtra("CHALLENGE", intent.getIntExtra("CHALLENGE", 0));
+        intent.putExtra("ALARM_ID", alarmId);
+        intent.putExtra("CHALLENGE", challengeType);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(AlarmService.this,
-                1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmId + 1000, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Alarm")
@@ -46,9 +52,11 @@ public class AlarmService extends Service {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1, builder.build());
     }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);

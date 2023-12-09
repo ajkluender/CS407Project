@@ -30,7 +30,6 @@ public class Alarm {
         this.hour = hour;
         this.minute = minute;
 
-
         this.title = title;
         this.challengeType = challengeType;
         this.isRecurring = isRecurring;
@@ -212,10 +211,9 @@ public class Alarm {
         intent.putExtra("TITLE", alarm.title);
         intent.putExtra("CHALLENGE", alarm.challengeType);
 
-
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                context, alarm.getAlarmId(), intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         long alarmStartTime = getAlarmStartTime(alarm);
         Log.d("Alarm", "Alarm start time: " + new Date(alarmStartTime).toString());

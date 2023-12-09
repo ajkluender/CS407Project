@@ -13,7 +13,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d("AlarmReceiver", "onReceive triggered");
         if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-
             if (!intent.getBooleanExtra("RECURRING", false) || alarmIsToday(intent)) {
                 Log.d("AlarmReceiver", "Starting Alarm Service");
                 startAlarmService(context, intent);
@@ -61,10 +60,9 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     private void startAlarmService(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, AlarmService.class);
-
         serviceIntent.putExtra("TITLE", intent.getStringExtra("TITLE"));
-        int challengeInt = serviceIntent.getIntExtra("CHALLENGE", 0);
-        serviceIntent.putExtra("CHALLENGE", challengeInt);
+        serviceIntent.putExtra("ALARM_ID", serviceIntent.getIntExtra("ALARM_ID", 0));
+        serviceIntent.putExtra("CHALLENGE", serviceIntent.getIntExtra("CHALLENGE", 0));
         context.startService(serviceIntent);
     }
 }

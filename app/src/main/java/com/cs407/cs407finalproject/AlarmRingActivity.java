@@ -16,6 +16,11 @@ public class AlarmRingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_ring);
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("CHALLENGE")) {
+            int challengeType = intent.getIntExtra("CHALLENGE", 0);
+        }
+
         FragmentContainerView fragmentContainerView = findViewById(R.id.fragmentContainerView);
         TextView greeting = findViewById(R.id.greeting);
         Button buttonSnooze = findViewById(R.id.buttonSnooze);
