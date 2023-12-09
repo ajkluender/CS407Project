@@ -4,10 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.cs407.cs407finalproject.AlarmBroadcastReceiver;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Alarm {
     private int alarmId;
@@ -195,6 +197,8 @@ public class Alarm {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
 
+        Log.d("Alarm", "Scheduling alarm: " + alarm.getTitle() + " at " + alarm.getHour() + ":" + alarm.getMinute());
+
         //Passing all alarm data
         intent.putExtra("ALARM_ID", alarm.alarmId);
         intent.putExtra("RECURRING", alarm.isRecurring);
@@ -208,10 +212,13 @@ public class Alarm {
         intent.putExtra("TITLE", alarm.title);
 
 
+
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                context, alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         long alarmStartTime = getAlarmStartTime(alarm);
+        Log.d("Alarm", "Alarm start time: " + new Date(alarmStartTime).toString());
 
         if (alarm.isRecurring) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime,
@@ -219,5 +226,12 @@ public class Alarm {
         } else {
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
         }
+    }
+
+    public static void cancelAlarm(Context context, Alarm alarm) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarm.getAlarmId(), intent, PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.cancel(pendingIntent);
     }
 }

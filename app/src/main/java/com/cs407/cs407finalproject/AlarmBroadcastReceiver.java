@@ -3,16 +3,19 @@ package com.cs407.cs407finalproject;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+
 import java.util.Calendar;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        Log.d("AlarmReceiver", "onReceive triggered");
         if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            // Check if the alarm is recurring and if today is one of the scheduled days
+
             if (!intent.getBooleanExtra("RECURRING", false) || alarmIsToday(intent)) {
+                Log.d("AlarmReceiver", "Starting Alarm Service");
                 startAlarmService(context, intent);
             }
         }
@@ -58,6 +61,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     private void startAlarmService(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, AlarmService.class);
+
         serviceIntent.putExtra("TITLE", intent.getStringExtra("TITLE"));
         context.startService(serviceIntent);
     }
