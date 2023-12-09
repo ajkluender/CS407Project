@@ -206,7 +206,7 @@ public class Alarm {
         intent.putExtra("SATURDAY", alarm.saturday);
         intent.putExtra("SUNDAY", alarm.sunday);
         intent.putExtra("TITLE", alarm.title);
-
+        intent.putExtra("CHALLENGE", alarm.challengeType);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);

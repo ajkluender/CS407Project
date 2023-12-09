@@ -2,7 +2,9 @@ package com.cs407.cs407finalproject;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -27,10 +29,17 @@ public class AlarmService extends Service {
     }
 
     private void sendNotification(String title) {
+        Intent intent = new Intent(AlarmService.this, AlarmRingActivity.class);
+        intent.putExtra("CHALLENGE", intent.getIntExtra("CHALLENGE", 0));
+        PendingIntent pendingIntent = PendingIntent.getActivity(AlarmService.this,
+                1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Alarm")
                 .setContentText(title)
                 .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
