@@ -45,6 +45,8 @@ public class SolveChallengeActivity extends AppCompatActivity {
             challengeDescription.setText("");
             challengeContent.setText("");
             challengeSolution = -1;
+            startActivity(new Intent(SolveChallengeActivity.this, MainActivity.class));
+            finish();
         } else if (challengeType == 1) { // addition
             challengeTitle.setText("ADDITION");
             challengeDescription.setText("Solve the following:");
@@ -66,10 +68,12 @@ public class SolveChallengeActivity extends AppCompatActivity {
             challengeContent.setText("" + num6);
             challengeSolution = num6 * num6;
         } else { // no challenge
-            challengeTitle.setText("ERROR");
-            challengeDescription.setText("ERROR");
-            challengeContent.setText("ERROR");
+            challengeTitle.setText("");
+            challengeDescription.setText("");
+            challengeContent.setText("");
             challengeSolution = -1;
+            startActivity(new Intent(SolveChallengeActivity.this, MainActivity.class));
+            finish();
         }
 
         Button submitButton = findViewById(R.id.submitButton);
