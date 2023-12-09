@@ -113,6 +113,7 @@ public class AddAlarmActivity extends AppCompatActivity {
                 int alarmId = isEditing ? currentAlarm.getAlarmId() : 0;
                 Alarm newAlarm = new Alarm(alarmId, hour, minute, title, challengeType, isOn, isRecurring,
                         monday, tuesday, wednesday,thursday, friday,saturday, sunday);
+
                 AlarmDBHelper dbHelper = new AlarmDBHelper(AddAlarmActivity.this);
 
                 long id;
@@ -124,6 +125,7 @@ public class AddAlarmActivity extends AppCompatActivity {
 
                 if (id != -1) {
                     Toast.makeText(AddAlarmActivity.this, "Alarm Saved!", Toast.LENGTH_SHORT).show();
+                    Alarm.scheduleAlarm(getApplicationContext(), newAlarm); // Schedule the alarm
                 } else {
                     Toast.makeText(AddAlarmActivity.this, "Error Saving Alarm", Toast.LENGTH_SHORT).show();
                 }
@@ -136,6 +138,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (currentAlarm != null) {
+                    Alarm.cancelAlarm(getApplicationContext(), currentAlarm);
                     dbHelper.deleteAlarm(currentAlarm.getAlarmId());
                 }
                 Toast.makeText(AddAlarmActivity.this, "Alarm Deleted", Toast.LENGTH_SHORT).show();

@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
@@ -23,11 +25,14 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String title = intent.getStringExtra("TITLE");
-        sendNotification(title);
-        return START_NOT_STICKY;
-    }
 
+        Log.d("AlarmService", "onStartCommand triggered");
+
+        String title = intent.getStringExtra("TITLE");
+        Log.d("AlarmService", "Alarm Title: " + title);
+        sendNotification(title);
+        return START_STICKY;
+    }
     private void sendNotification(String title) {
         Intent intent = new Intent(AlarmService.this, AlarmRingActivity.class);
         intent.putExtra("CHALLENGE", intent.getIntExtra("CHALLENGE", 0));
@@ -41,16 +46,14 @@ public class AlarmService extends Service {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1, builder.build());
     }
-
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
 
