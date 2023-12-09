@@ -3,8 +3,6 @@ package com.cs407.cs407finalproject;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
-
 import java.util.Calendar;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
@@ -59,7 +57,8 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void startAlarmService(Context context, Intent intent) {
-        // Logic to start your AlarmService
-        // This service can show a notification, play a sound, etc.
+        Intent serviceIntent = new Intent(context, AlarmService.class);
+        serviceIntent.putExtra("TITLE", intent.getStringExtra("TITLE"));
+        context.startService(serviceIntent);
     }
 }
