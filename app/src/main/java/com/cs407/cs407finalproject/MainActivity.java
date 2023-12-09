@@ -14,6 +14,7 @@ import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private void refreshAlarmList() {
         alarmsList.clear();
         alarmsList.addAll(dbHelper.getAllAlarms());
+        sortAlarms();
 
         List<String> displayList = new ArrayList<>();
         for (Alarm alarm : alarmsList) {
@@ -83,6 +85,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String formatAlarmForDisplay(Alarm alarm) {
-        return alarm.getTitle() + " - " + alarm.getHour() + ":" + alarm.getMinute();
+        return alarm.getTitle() + " - " + alarm.getHour() + ":"
+                + String.format("%02d", alarm.getMinute());
+    }
+
+    private void sortAlarms() {
+        Collections.sort(alarmsList, (a1, a2) -> {
+            int hourCompare = Integer.compare(a1.getHour(), a2.getHour());
+            if (hourCompare == 0) {
+                return Integer.compare(a1.getMinute(), a2.getMinute());
+            }
+            return hourCompare;
+        });
     }
 }
