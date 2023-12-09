@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             String displayText = formatAlarmForDisplay(alarm);
             displayList.add(displayText);
         }
-
         adapter.clear();
         adapter.addAll(displayList);
         adapter.notifyDataSetChanged();
