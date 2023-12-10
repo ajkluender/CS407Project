@@ -33,6 +33,12 @@
             android:layout_gravity="center" />
 
         <CheckBox
+            android:id="@+id/enableAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Alarm" />
+
+        <CheckBox
             android:id="@+id/recurringAlarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

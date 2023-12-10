@@ -31,6 +31,9 @@ public class AddAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
 
+        TimePicker timePicker = findViewById(R.id.timePickerUser);
+        timePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+
         dbHelper = new AlarmDBHelper(AddAlarmActivity.this);
 
         if (getIntent().hasExtra("ALARM_ID")) {
@@ -80,7 +83,7 @@ public class AddAlarmActivity extends AppCompatActivity {
                 EditText alarmNameEditText = findViewById(R.id.alarmName);
                 String title = alarmNameEditText.getText().toString();
 
-                boolean isOn = true; // A new alarm is on by default
+                boolean isOn = ((CheckBox) findViewById(R.id.enableAlarm)).isChecked();
                 boolean isRecurring = recurringAlarm.isChecked();
                 boolean monday = ((CheckBox) findViewById(R.id.checkMon)).isChecked();
                 boolean tuesday = ((CheckBox) findViewById(R.id.checkTue)).isChecked();
