@@ -93,8 +93,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String formatAlarmForDisplay(Alarm alarm) {
-        return alarm.getTitle() + " - " + alarm.getHour() + ":"
-                + String.format("%02d", alarm.getMinute());
+        String title = "untitled";
+        if (alarm.getTitle().length() > 0) {
+            title = alarm.getTitle();
+        }
+        if (alarm.isOn()) {
+            return "[ON] " + alarm.getHour() + ":" + String.format("%02d", alarm.getMinute())
+                    + " - " + title;
+        }
+        return "[OFF] " + alarm.getHour() + ":" + String.format("%02d", alarm.getMinute())
+                + " - " + title;
     }
 
     private void sortAlarms() {

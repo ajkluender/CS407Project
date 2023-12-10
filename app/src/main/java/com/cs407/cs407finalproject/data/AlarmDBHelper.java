@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -16,7 +17,6 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "AlarmDatabase.db";
-//DAYS
     private static final String TABLE_NAME = "alarms";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_HOUR = "hour";
@@ -30,7 +30,6 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FRIDAY = "friday";
     private static final String COLUMN_SATURDAY = "saturday";
     private static final String COLUMN_SUNDAY = "sunday";
-    //END DAYS
     private static final String COLUMN_CHALLENGE_TYPE = "challengeType";
     private static final String COLUMN_TITLE = "title";
 
@@ -51,14 +50,12 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                     COLUMN_TITLE + " TEXT," +
                     COLUMN_CHALLENGE_TYPE + " INTEGER)";
 
-
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     public AlarmDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(@NonNull SQLiteDatabase db) {
@@ -72,7 +69,6 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
-
 
     public long insertAlarm(@NonNull Alarm alarm) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -100,6 +96,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         // returns -1 if there was an error
         return id;
     }
+
     public int updateAlarm(@NonNull Alarm alarm) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -207,5 +204,13 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return alarms;
+    }
+
+    public void updateAlarmStatus(int alarmId, boolean isEnabled) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IS_ON, isEnabled);
+        db.update(TABLE_NAME, values, COLUMN_ID + " = ?",
+                new String[] { String.valueOf(alarmId) });
     }
 }

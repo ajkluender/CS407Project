@@ -8,10 +8,11 @@ import android.util.Log;
 
 import com.cs407.cs407finalproject.AlarmBroadcastReceiver;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Alarm {
+public class Alarm implements Serializable {
     private int alarmId;
     private int hour;
     private int minute;
@@ -199,7 +200,9 @@ public class Alarm {
         Log.d("Alarm", "Scheduling alarm: " + alarm.getTitle() + " at " + alarm.getHour() + ":" + alarm.getMinute());
 
         //Passing all alarm data
+        intent.putExtra("ALARM", alarm);
         intent.putExtra("ALARM_ID", alarm.alarmId);
+        intent.putExtra("IS_ON", alarm.isOn);
         intent.putExtra("RECURRING", alarm.isRecurring);
         intent.putExtra("MONDAY", alarm.monday);
         intent.putExtra("TUESDAY", alarm.tuesday);

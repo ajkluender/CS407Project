@@ -158,6 +158,9 @@ public class AddAlarmActivity extends AppCompatActivity {
         EditText alarmNameEditText = findViewById(R.id.alarmName);
         alarmNameEditText.setText(alarm.getTitle());
 
+        CheckBox enableAlarm = findViewById(R.id.enableAlarm);
+        enableAlarm.setChecked(alarm.isOn());
+
         CheckBox recurringAlarm = findViewById(R.id.recurringAlarm);
         recurringAlarm.setChecked(alarm.isRecurring());
 

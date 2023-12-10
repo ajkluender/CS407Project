@@ -10,20 +10,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cs407.cs407finalproject.data.Alarm;
+import com.cs407.cs407finalproject.data.AlarmDBHelper;
+
 import java.util.Random;
 
 public class SolveChallengeActivity extends AppCompatActivity {
 
+    Alarm alarm;
+    String title = "";
+    int alarmId = 0;
     int challengeType = -1;
-
+    boolean isRecurring = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solve_challenge);
 
         Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("ALARM")) {
+            alarm = (Alarm) intent.getSerializableExtra("ALARM");
+        }
+        if (intent != null && intent.hasExtra("TITLE")) {
+            title = intent.getStringExtra("TITLE");
+        }
+        if (intent != null && intent.hasExtra("ALARM_ID")) {
+            alarmId = intent.getIntExtra("ALARM_ID", -1);
+        }
         if (intent != null && intent.hasExtra("CHALLENGE")) {
             challengeType = intent.getIntExtra("CHALLENGE", 0);
+        }
+        if (intent != null && intent.hasExtra("RECURRING")) {
+            isRecurring = intent.getBooleanExtra("RECURRING", false);
         }
 
         TextView challengeTitle = findViewById(R.id.challengeTitle);

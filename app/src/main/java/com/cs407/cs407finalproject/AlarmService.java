@@ -13,11 +13,16 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.cs407.cs407finalproject.data.Alarm;
+import com.cs407.cs407finalproject.data.AlarmDBHelper;
+
 public class AlarmService extends Service {
 
+    Alarm alarm;
     String title = "";
-    int challengeType = -1;
     int alarmId = 0;
+    int challengeType = -1;
+    boolean isRecurring = false;
 
     private static final String CHANNEL_ID = "AlarmServiceChannel";
 
@@ -33,13 +38,21 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("AlarmService", "onStartCommand triggered");
-        title = intent.getStringExtra("TITLE");
+        if (intent != null && intent.hasExtra("ALARM")) {
+            alarm = (Alarm) intent.getSerializableExtra("ALARM");
+        }
+        if (intent != null && intent.hasExtra("TITLE")) {
+            title = intent.getStringExtra("TITLE");
+        }
+        if (intent != null && intent.hasExtra("ALARM_ID")) {
+            alarmId = intent.getIntExtra("ALARM_ID", -1);
+        }
         if (intent != null && intent.hasExtra("CHALLENGE")) {
             challengeType = intent.getIntExtra("CHALLENGE", 0);
         }
-        Log.d("c1", "c1: " + challengeType);
-        Log.d("t1", "t1: " + title);
+        if (intent != null && intent.hasExtra("RECURRING")) {
+            isRecurring = intent.getBooleanExtra("RECURRING", false);
+        }
 
         // replace these 3 lines with sendNotification(title); to revert changes
         NotificationThread2 notificationThread2 = new NotificationThread2(title);
@@ -51,11 +64,14 @@ public class AlarmService extends Service {
 
     private void sendNotification(String title) {
         Intent intent = new Intent(AlarmService.this, AlarmRingActivity.class);
+        intent.putExtra("ALARM", alarm);
+        intent.putExtra("TITLE", title);
         intent.putExtra("ALARM_ID", alarmId);
         intent.putExtra("CHALLENGE", challengeType);
+        intent.putExtra("RECURRING", isRecurring);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(AlarmService.this,
-                alarmId + 1000, intent,
+                alarmId + 10000, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
