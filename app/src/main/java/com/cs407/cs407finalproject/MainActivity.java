@@ -1,14 +1,21 @@
 package com.cs407.cs407finalproject;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
@@ -35,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupListView();
         setupAddAlarmButton();
+        requestPermission();
     }
 
     @Override
@@ -97,5 +105,23 @@ public class MainActivity extends AppCompatActivity {
             }
             return hourCompare;
         });
+    }
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if(!isGranted) {
+                    Toast.makeText(this, "Enable notifications to continue.", Toast.LENGTH_LONG).show();
+                }
+            });
+
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
     }
 }

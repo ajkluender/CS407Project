@@ -31,17 +31,17 @@ public class AddAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
 
-        // Initialize the database helper
+        TimePicker timePicker = findViewById(R.id.timePickerUser);
+        timePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+
         dbHelper = new AlarmDBHelper(AddAlarmActivity.this);
 
         if (getIntent().hasExtra("ALARM_ID")) {
             int alarmId = getIntent().getIntExtra("ALARM_ID", -1);
             if (alarmId != -1) {
                 isEditing = true;
-                // Retrieve the alarm to be edited from the database
                 currentAlarm = dbHelper.getAlarmById(alarmId); // Implement this method in DBHelper
                 if (currentAlarm != null) {
-                    // Populate the UI with the alarm data
                     populateUIWithAlarmData(currentAlarm);
                 }
             }
@@ -83,7 +83,7 @@ public class AddAlarmActivity extends AppCompatActivity {
                 EditText alarmNameEditText = findViewById(R.id.alarmName);
                 String title = alarmNameEditText.getText().toString();
 
-                boolean isOn = true; // A new alarm is on by default
+                boolean isOn = ((CheckBox) findViewById(R.id.enableAlarm)).isChecked();
                 boolean isRecurring = recurringAlarm.isChecked();
                 boolean monday = ((CheckBox) findViewById(R.id.checkMon)).isChecked();
                 boolean tuesday = ((CheckBox) findViewById(R.id.checkTue)).isChecked();
@@ -151,7 +151,6 @@ public class AddAlarmActivity extends AppCompatActivity {
     }
 
     private void populateUIWithAlarmData(Alarm alarm) {
-        // Populate the UI fields with data from the alarm object
         TimePicker timePicker = findViewById(R.id.timePickerUser);
         timePicker.setHour(alarm.getHour());
         timePicker.setMinute(alarm.getMinute());
