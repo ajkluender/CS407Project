@@ -100,63 +100,6 @@ public class Alarm {
         return sunday;
     }
 
-    // Setters
-    public void setAlarmId(int alarmId) {
-        this.alarmId = alarmId;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setChallengeType(int challengeType) {
-        this.challengeType = challengeType;
-    }
-
-    public void setOn(boolean on) {
-        isOn = on;
-    }
-
-    public void setRecurring(boolean recurring) {
-        isRecurring = recurring;
-    }
-
-    public void setMonday(boolean monday) {
-        this.monday = monday;
-    }
-
-    public void setTuesday(boolean tuesday) {
-        this.tuesday = tuesday;
-    }
-
-    public void setWednesday(boolean wednesday) {
-        this.wednesday = wednesday;
-    }
-
-    public void setThursday(boolean thursday) {
-        this.thursday = thursday;
-    }
-
-    public void setFriday(boolean friday) {
-        this.friday = friday;
-    }
-
-    public void setSaturday(boolean saturday) {
-        this.saturday = saturday;
-    }
-
-    public void setSunday(boolean sunday) {
-        this.sunday = sunday;
-    }
-
     private static long getAlarmStartTime(Alarm alarm) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());

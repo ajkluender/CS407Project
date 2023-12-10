@@ -31,14 +31,17 @@ public class AddAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
 
+        // Initialize the database helper
         dbHelper = new AlarmDBHelper(AddAlarmActivity.this);
 
         if (getIntent().hasExtra("ALARM_ID")) {
             int alarmId = getIntent().getIntExtra("ALARM_ID", -1);
             if (alarmId != -1) {
                 isEditing = true;
+                // Retrieve the alarm to be edited from the database
                 currentAlarm = dbHelper.getAlarmById(alarmId); // Implement this method in DBHelper
                 if (currentAlarm != null) {
+                    // Populate the UI with the alarm data
                     populateUIWithAlarmData(currentAlarm);
                 }
             }
@@ -148,6 +151,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     }
 
     private void populateUIWithAlarmData(Alarm alarm) {
+        // Populate the UI fields with data from the alarm object
         TimePicker timePicker = findViewById(R.id.timePickerUser);
         timePicker.setHour(alarm.getHour());
         timePicker.setMinute(alarm.getMinute());

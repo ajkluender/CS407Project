@@ -35,6 +35,7 @@ public class AlarmService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("AlarmService", "onStartCommand triggered");
         title = intent.getStringExtra("TITLE");
+        // Extract the alarm title and challenge type from the intent
         if (intent != null && intent.hasExtra("CHALLENGE")) {
             challengeType = intent.getIntExtra("CHALLENGE", 0);
         }
@@ -50,6 +51,7 @@ public class AlarmService extends Service {
     }
 
     private void sendNotification(String title) {
+        // Create an intent to open AlarmRingActivity when the notification is tapped
         Intent intent = new Intent(AlarmService.this, AlarmRingActivity.class);
         intent.putExtra("ALARM_ID", alarmId);
         intent.putExtra("CHALLENGE", challengeType);
@@ -58,6 +60,7 @@ public class AlarmService extends Service {
                 alarmId + 1000, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
+        // Build the notification with title, text, and an icon
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Alarm")
                 .setContentText(title)
@@ -67,10 +70,12 @@ public class AlarmService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify(1, builder.build());// Show the notification
     }
 
     private void createNotificationChannel() {
+        // For API 26 and above, create a notification channel
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
