@@ -20,12 +20,20 @@ import android.widget.Toast;
 import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
 
+/**
+ * Activity where an alarm is added into the list and UI.
+ */
 public class AddAlarmActivity extends AppCompatActivity {
 
     private Alarm currentAlarm;
     private boolean isEditing = false;
     private AlarmDBHelper dbHelper;
-    
+
+    /**
+     * Overridden from AppCompactActivity
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +158,11 @@ public class AddAlarmActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Puts an alarm into the UI
+     *
+     * @param alarm puts the alarm into the UI
+     */
     private void populateUIWithAlarmData(Alarm alarm) {
         TimePicker timePicker = findViewById(R.id.timePickerUser);
         timePicker.setHour(alarm.getHour());

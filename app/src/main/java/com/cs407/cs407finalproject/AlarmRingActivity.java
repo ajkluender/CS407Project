@@ -20,6 +20,10 @@ import com.cs407.cs407finalproject.data.AlarmDBHelper;
 
 import java.util.Calendar;
 
+/**
+ * AlarmRingActivity extends AppCompatActivity for the activity
+ * Has the Activity for the UI that contains the alarm when it rings
+ */
 public class AlarmRingActivity extends AppCompatActivity {
 
     Alarm alarm;
@@ -29,6 +33,11 @@ public class AlarmRingActivity extends AppCompatActivity {
     boolean isRecurring = false;
     private static final String CHANNEL_ID = "AlarmServiceChannel";
 
+    /**
+     * Overridden from AppCompactActivity
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

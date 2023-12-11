@@ -12,7 +12,12 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-//https://developer.android.com/training/data-storage/sqlite
+/**
+ * Alarm Database Helper class, manages the database containing the alarms
+ * https://developer.android.com/training/data-storage/sqlite
+ *
+ * Uses SQLiteOpenHelper
+ */
 public class AlarmDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -53,23 +58,44 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
 
+    /**
+     * Constructor, sets the context used.
+     *
+     * @param context Context Object
+     */
     public AlarmDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Overridden from SQLiteDatabase
+     * @param db Database object
+     */
     @Override
     public void onCreate(@NonNull SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
+    /**
+     * This database is only a cache for online data, so its upgrade policy is
+     * to simply to discard the data and start over
+     *
+     * @param db Database object
+     * @param oldVersion old version of the database
+     * @param newVersion new version of the database
+     */
     @Override
     public void onUpgrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
+    /**
+     * Inserts an alarm into the database
+     *
+     * @param alarm The alarm object to be added.
+     * @return long, the id of the alarm
+     */
     public long insertAlarm(@NonNull Alarm alarm) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -80,9 +106,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 
         values.put(COLUMN_IS_RECURRING, alarm.isRecurring() ? 1 : 0);
 
-
         values.put(COLUMN_IS_ON, alarm.isOn() ? 1 : 0);
-
 
         values.put(COLUMN_MONDAY, alarm.isMonday() ? 1 : 0);
         values.put(COLUMN_TUESDAY, alarm.isTuesday() ? 1 : 0);
@@ -101,9 +125,13 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    /**
+     * Updates an alarm in the database
+     *
+     * @param alarm the Alarm object
+     * @return the id of the alarm to be updated
+     */
     public int updateAlarm(@NonNull Alarm alarm) {
-
-
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_HOUR, alarm.getHour());
@@ -130,6 +158,11 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    /**
+     * Deletes an alarm from the database
+     *
+     * @param alarmId The alarm id of the alarm to be removed
+     */
     public void deleteAlarm(int alarmId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, COLUMN_ID + " = ?",
@@ -137,6 +170,12 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Allows user to search for an Alarm by ID
+     *
+     * @param id, the id that the user queries by
+     * @return Alarm, the alarm object found, null if not found
+     */
     public Alarm getAlarmById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
@@ -177,6 +216,11 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         return null; // Return null if alarm is not found
     }
 
+    /**
+     * Returns all alarms
+     *
+     * @return List<Alarm> list containing all the alarms
+     */
     public List<Alarm> getAllAlarms() {
         List<Alarm> alarms = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -213,6 +257,12 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         return alarms;
     }
 
+    /**
+     * Updates an alarms status (On or Off)
+     *
+     * @param alarmId Alarm ID to be updated
+     * @param isEnabled Whether the alarm is currently on or not
+     */
     public void updateAlarmStatus(int alarmId, boolean isEnabled) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();

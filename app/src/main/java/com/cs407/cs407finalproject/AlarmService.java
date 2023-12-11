@@ -17,6 +17,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
 
+/**
+ * AlarmService extends Service
+ * Access the service to send a notification for an Alarm
+ */
 public class AlarmService extends Service {
 
     Alarm alarm;
@@ -27,6 +31,9 @@ public class AlarmService extends Service {
 
     private static final String CHANNEL_ID = "AlarmServiceChannel";
 
+    /**
+     * Extended from Service class
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,6 +44,14 @@ public class AlarmService extends Service {
         thread.start();
     }
 
+    /**
+     * Overriden from Service
+     *
+     * @param intent, the intent object
+     * @param flags, flags
+     * @param startId, gives the starting id
+     * @return int , returns the status
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null && intent.hasExtra("ALARM")) {
@@ -63,6 +78,11 @@ public class AlarmService extends Service {
         return START_STICKY;
     }
 
+    /**
+     * Sends a notification to the screen
+     *
+     * @param title title of the alarm
+     */
     private void sendNotification(String title) {
         Intent intent = new Intent(AlarmService.this, AlarmRingActivity.class);
         intent.putExtra("ALARM", alarm);
@@ -87,6 +107,9 @@ public class AlarmService extends Service {
         notificationManager.notify(1, builder.build());
     }
 
+    /**
+     * Makes a notification channel
+     */
     private void createNotificationChannel() {
 
 
@@ -102,13 +125,22 @@ public class AlarmService extends Service {
         }
     }
 
+    /**
+     * Unused, needed to be overridden
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    /**
+     *
+     */
     class NotificationThread1 implements Runnable {
+        /**
+         * Overriden from Runnable
+         */
         @Override
         public void run() {
             createNotificationChannel();
@@ -119,10 +151,18 @@ public class AlarmService extends Service {
 
         private String title;
 
+        /**
+         * Constructor for NT2
+         *
+         * @param title, String representing title of the alarm
+         */
         public NotificationThread2(String title) {
             this.title = title;
         }
 
+        /**
+         * Overriden from Runnable
+         */
         @Override
         public void run() {
             sendNotification(title);

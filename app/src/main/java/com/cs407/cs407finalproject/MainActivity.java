@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * MainActivity the first activity that the user will see, and manages the app.
+ * Extends AppCompactActivity by default
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
@@ -35,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private AlarmDBHelper dbHelper;
 
+    /**
+     * OnCreate method, imported from AppCompactActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +57,18 @@ public class MainActivity extends AppCompatActivity {
         requestPermission();
     }
 
+    /**
+     * Resumes the application
+     */
     @Override
     protected void onResume() {
         super.onResume();
         refreshAlarmList();
     }
 
+    /**
+     * Sets up the list view for the alarms
+     */
     private void setupListView() {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>());
         listView.setAdapter(adapter);
@@ -70,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up the button to add a new button
+     */
     private void setupAddAlarmButton() {
         Button addAlarm = findViewById(R.id.addAlarm);
         addAlarm.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     */
     private void refreshAlarmList() {
         alarmsList.clear();
         alarmsList.addAll(dbHelper.getAllAlarms());
@@ -96,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     *
+     * @param alarm
+     * @return
+     */
     private String formatAlarmForDisplay(Alarm alarm) {
         String title = "untitled";
         if (alarm.getTitle().length() > 0) {
@@ -109,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 + " - " + title;
     }
 
+    /**
+     *
+     */
     private void sortAlarms() {
         Collections.sort(alarmsList, (a1, a2) -> {
             int hourCompare = Integer.compare(a1.getHour(), a2.getHour());
@@ -119,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     */
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if(!isGranted) {
@@ -126,6 +157,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+    /**
+     *
+     */
     private void requestPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             return;

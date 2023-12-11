@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Alarm class, implementing Serializable, creates an Alarm object.
+ */
 public class Alarm implements Serializable {
     private int alarmId;
     private int hour;
@@ -23,7 +26,24 @@ public class Alarm implements Serializable {
     private int challengeType;
     private String title;
 
-    // Constructor
+    /**
+     * Sets all the variables for the alarm
+     *
+     * @param alarmId id of the alarm
+     * @param hour hour of the alarm
+     * @param minute minute of the alarm
+     * @param title name of the alarm
+     * @param challengeType the type of challenge the user will get
+     * @param isOn whether the alarm is on
+     * @param isRecurring whether the alarm is recurring
+     * @param monday whether the alarm is for monday
+     * @param tuesday whether the alarm is for tuesday
+     * @param wednesday whether the alarm is for wednesday
+     * @param thursday whether the alarm is for thursday
+     * @param friday whether the alarm is for friday
+     * @param saturday whether the alarm is for saturday
+     * @param sunday whether the alarm is for sunday
+     */
     public Alarm(int alarmId, int hour, int minute, String title,
                  int challengeType, boolean isOn, boolean isRecurring, boolean monday, boolean tuesday,
                  boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
@@ -45,62 +65,139 @@ public class Alarm implements Serializable {
         this.sunday = sunday;
     }
     // Getters
+
+    /**
+     * Returns the ID for this alarm.
+     *
+     * @return the id for this alarm
+     */
     public int getAlarmId() {
         return alarmId;
     }
 
+    /**
+     * Returns the hour the alarm goes off.
+     *
+     * @return int, the hour the alarm will go off
+     */
     public int getHour() {
         return hour;
     }
 
+    /**
+     * Returns the minute the alarm goes off.
+     *
+     * @return int, the minute the alarm will go off
+     */
     public int getMinute() {
         return minute;
     }
 
+    /**
+     * Returns the title of the alarm
+     *
+     * @return String, The title of the alarm
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Returns the challenge type for this alarm
+     *
+     * @return int, to determine which challenge
+     */
     public int getChallengeType() {
         return challengeType;
     }
 
+    /**
+     * Determines whether this alarm is on
+     *
+     * @return boolean, whether the alarm is on
+     */
     public boolean isOn() {
         return isOn;
     }
 
+    /**
+     * Determines whether this alarm is a recurring alarm
+     *
+     * @return boolean, whether the alarm recurs or not.
+     */
     public boolean isRecurring() {
         return isRecurring;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Monday
+     */
     public boolean isMonday() {
         return monday;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Tuesday
+     */
     public boolean isTuesday() {
         return tuesday;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Wednesday
+     */
     public boolean isWednesday() {
         return wednesday;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Thursday
+     */
     public boolean isThursday() {
         return thursday;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Friday
+     */
     public boolean isFriday() {
         return friday;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Saturday
+     */
     public boolean isSaturday() {
         return saturday;
     }
 
+    /**
+     * Determines whether this alarm is on the specified day
+     *
+     * @return boolean, whether the alarm is for Sunday
+     */
     public boolean isSunday() {
         return sunday;
     }
 
+    /**
+     * Returns the start time of the alarm
+     *
+     * @param alarm The Alarm object
+     * @return returns a long containing the start time of the alarm
+     */
     private static long getAlarmStartTime(Alarm alarm) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -123,6 +220,13 @@ public class Alarm implements Serializable {
         return calendar.getTimeInMillis();
     }
 
+    /**
+     *
+     *
+     * @param alarm Alarm object to access the date of the alarm.
+     * @param calendar Calendar object to get the current day of the week.
+     * @return boolean, Whether the alarm date is today
+     */
     private static boolean isAlarmDayToday(Alarm alarm, Calendar calendar) {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         switch (dayOfWeek) {
@@ -136,6 +240,13 @@ public class Alarm implements Serializable {
             default: return false;
         }
     }
+
+    /**
+     * Allows user to schedule a new alarm
+     *
+     * @param context Context object
+     * @param alarm Alarm to be scheduled
+     */
     public static void scheduleAlarm(Context context, Alarm alarm){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
@@ -172,6 +283,13 @@ public class Alarm implements Serializable {
         }
     }
 
+
+    /**
+     * Cancels an Alarm.
+     *
+     * @param context Context object
+     * @param alarm Alarm to be cancelled
+     */
     public static void cancelAlarm(Context context, Alarm alarm) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);

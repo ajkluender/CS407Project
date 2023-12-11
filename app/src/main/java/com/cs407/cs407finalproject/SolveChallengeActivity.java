@@ -15,6 +15,13 @@ import com.cs407.cs407finalproject.data.AlarmDBHelper;
 
 import java.util.Random;
 
+/**
+ * SolveChallengeActivity
+ *
+ * Provides the UI for the user looking to solve a given challenge.
+ * Extends AppCompactActivity by default
+ *
+ */
 public class SolveChallengeActivity extends AppCompatActivity {
 
     Alarm alarm;
@@ -22,6 +29,11 @@ public class SolveChallengeActivity extends AppCompatActivity {
     int alarmId = 0;
     int challengeType = -1;
     boolean isRecurring = false;
+
+    /**
+     * OnCreate method, imported from AppCompactActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

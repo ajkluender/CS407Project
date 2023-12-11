@@ -10,8 +10,17 @@ import com.cs407.cs407finalproject.data.AlarmDBHelper;
 
 import java.util.Calendar;
 
+/**
+ * Allows Alarms to interact with other intents and contexts
+ */
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
+    /**
+     * method overridden from BroadcastReceiver
+     *
+     * @param context context object
+     * @param intent intent object
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
             if ((!intent.getBooleanExtra("RECURRING", false)
@@ -22,6 +31,12 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     }
 
+    /**
+     * Checks whether the alarm is set for today
+     *
+     * @param intent Intent object
+     * @return boolean, whether the alarm is set for today
+     */
     private boolean alarmIsToday(Intent intent) {
         // Get the current day of the week
         Calendar calendar = Calendar.getInstance();
@@ -41,6 +56,12 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
+    /**
+     * starts the alarm notification service
+     *
+     * @param context Context object
+     * @param intent Intent object
+     */
     private void startAlarmService(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, AlarmService.class);
         serviceIntent.putExtra("ALARM", intent.getSerializableExtra("ALARM"));
