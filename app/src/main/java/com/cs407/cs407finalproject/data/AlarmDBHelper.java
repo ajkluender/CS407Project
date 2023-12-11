@@ -79,7 +79,11 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_MINUTE, alarm.getMinute());
 
         values.put(COLUMN_IS_RECURRING, alarm.isRecurring() ? 1 : 0);
+
+
         values.put(COLUMN_IS_ON, alarm.isOn() ? 1 : 0);
+
+
         values.put(COLUMN_MONDAY, alarm.isMonday() ? 1 : 0);
         values.put(COLUMN_TUESDAY, alarm.isTuesday() ? 1 : 0);
         values.put(COLUMN_WEDNESDAY, alarm.isWednesday() ? 1 : 0);
@@ -98,8 +102,9 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
     }
 
     public int updateAlarm(@NonNull Alarm alarm) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
+
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_HOUR, alarm.getHour());
         values.put(COLUMN_MINUTE, alarm.getMinute());
@@ -141,6 +146,8 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
             int hour = cursor.getInt(cursor.getColumnIndex(COLUMN_HOUR));
             int minute = cursor.getInt(cursor.getColumnIndex(COLUMN_MINUTE));
             boolean isRecurring = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_RECURRING)) == 1;
+
+
             boolean isOn = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_ON)) == 1;
 
             boolean monday = cursor.getInt(cursor.getColumnIndex(COLUMN_MONDAY)) == 1;
