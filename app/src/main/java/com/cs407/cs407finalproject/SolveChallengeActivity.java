@@ -105,11 +105,15 @@ public class SolveChallengeActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(userAnswer.getText().toString()) == challengeSolution) {
-                    Intent intent = new Intent(SolveChallengeActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
+                try{
+                    if (Integer.parseInt(userAnswer.getText().toString()) == challengeSolution) {
+                        Intent intent = new Intent(SolveChallengeActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        submitButton.setText("Try Again");
+                    }
+                }catch(Exception e){
                     submitButton.setText("Try Again");
                 }
             }
