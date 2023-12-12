@@ -5,9 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import com.cs407.cs407finalproject.AlarmBroadcastReceiver;
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,15 +13,23 @@ import java.util.Date;
 /**
  * Alarm class, implementing Serializable, creates an Alarm object.
  */
-public class Alarm implements Serializable {
+public class Alarm implements Serializable, Comparable<Alarm> {
+    //Contains the ID for the Alarm
     private int alarmId;
+    //The hour the alarm is set for
     private int hour;
+    //The exact minute the alarm is set for
     private int minute;
+    //whether the alarm is recurring or not
     private boolean isRecurring;
+    //whether the alarm is on
     private boolean isOn;
+    //booleans for all 7 days of the week
     private boolean monday, tuesday, wednesday,
             thursday, friday, saturday, sunday;
+    //type of challenge used for this alarm
     private int challengeType;
+    //title of the alarm
     private String title;
 
     /**
@@ -295,5 +301,28 @@ public class Alarm implements Serializable {
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarm.getAlarmId(), intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.cancel(pendingIntent);
+    }
+
+    @Override
+    public String toString(){
+        String title = "untitled";
+        if (this.getTitle().length() > 0) {
+            title = this.getTitle();
+        }
+        if (this.isOn()) {
+            return "[ON] " + this.getHour() + ":" + String.format("%02d", this.getMinute())
+                    + " - " + title;
+        }
+        return "[OFF] " + this.getHour() + ":" + String.format("%02d", this.getMinute())
+                + " - " + title;
+    }
+
+    @Override
+    public int compareTo(Alarm other) {
+        int hourCompare = Integer.compare(this.getHour(), other.getHour());
+        if (hourCompare == 0) {
+            return Integer.compare(this.getMinute(), other.getMinute());
+        }
+        return hourCompare;
     }
 }

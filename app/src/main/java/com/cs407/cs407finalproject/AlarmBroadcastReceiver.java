@@ -3,11 +3,6 @@ package com.cs407.cs407finalproject;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
-import com.cs407.cs407finalproject.data.Alarm;
-import com.cs407.cs407finalproject.data.AlarmDBHelper;
-
 import java.util.Calendar;
 
 /**

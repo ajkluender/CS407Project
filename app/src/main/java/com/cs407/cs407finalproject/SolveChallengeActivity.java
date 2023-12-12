@@ -1,18 +1,13 @@
 package com.cs407.cs407finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.cs407.cs407finalproject.data.Alarm;
-import com.cs407.cs407finalproject.data.AlarmDBHelper;
-
 import java.util.Random;
 
 /**
@@ -26,9 +21,9 @@ public class SolveChallengeActivity extends AppCompatActivity {
 
     Alarm alarm;
     String title = "";
-    int alarmId = 0;
+    int alarmId;
     int challengeType = -1;
-    boolean isRecurring = false;
+    boolean isRecurring;
 
     /**
      * OnCreate method, imported from AppCompactActivity

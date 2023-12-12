@@ -1,10 +1,6 @@
 package com.cs407.cs407finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
 

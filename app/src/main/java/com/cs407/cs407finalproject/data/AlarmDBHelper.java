@@ -5,10 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,52 +16,42 @@ import java.util.List;
  * Uses SQLiteOpenHelper
  */
 public class AlarmDBHelper extends SQLiteOpenHelper {
-
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "AlarmDatabase.db";
     private static final String TABLE_NAME = "alarms";
+    //gives the column_id of the table,
     private static final String COLUMN_ID = "id";
+    //gives the column_hour of the table
     private static final String COLUMN_HOUR = "hour";
+    //gives the column_minute of the table,
     private static final String COLUMN_MINUTE = "minute";
+    //gives the column_is_recurring of the table,
     private static final String COLUMN_IS_RECURRING = "isRecurring";
+    //gives the column_is_on of the table,
     private static final String COLUMN_IS_ON = "isOn";
+    //gives the column_monday of the table,
     private static final String COLUMN_MONDAY = "monday";
+    //gives the column_tuesday of the table,
     private static final String COLUMN_TUESDAY = "tuesday";
+    //gives the column_wednesday of the table,
     private static final String COLUMN_WEDNESDAY = "wednesday";
+    //gives the column_thursday of the table,
     private static final String COLUMN_THURSDAY = "thursday";
+    //gives the column_friday of the table,
     private static final String COLUMN_FRIDAY = "friday";
+    //gives the column_saturday of the table,
     private static final String COLUMN_SATURDAY = "saturday";
+    //gives the column_sunday of the table,
     private static final String COLUMN_SUNDAY = "sunday";
+    //gives the column_challenge_type of the table,
     private static final String COLUMN_CHALLENGE_TYPE = "challengeType";
+    //gives the column_title of the table,
     private static final String COLUMN_TITLE = "title";
-
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TABLE_NAME + " (" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_HOUR + " INTEGER," +
-                    COLUMN_MINUTE + " INTEGER," +
-                    COLUMN_IS_RECURRING + " INTEGER," +
-                    COLUMN_IS_ON + " INTEGER," +
-                    COLUMN_MONDAY + " INTEGER," +
-                    COLUMN_TUESDAY + " INTEGER," +
-                    COLUMN_WEDNESDAY + " INTEGER," +
-                    COLUMN_THURSDAY + " INTEGER," +
-                    COLUMN_FRIDAY + " INTEGER," +
-                    COLUMN_SATURDAY + " INTEGER," +
-                    COLUMN_SUNDAY + " INTEGER," +
-                    COLUMN_TITLE + " TEXT," +
-                    COLUMN_CHALLENGE_TYPE + " INTEGER)";
-
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + TABLE_NAME;
-
     /**
      * Constructor, sets the context used.
      *
      * @param context Context Object
      */
     public AlarmDBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, "AlarmDatabase.db", null, 1);
     }
 
     /**
@@ -73,7 +60,21 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(@NonNull SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_HOUR + " INTEGER," +
+                COLUMN_MINUTE + " INTEGER," +
+                COLUMN_IS_RECURRING + " INTEGER," +
+                COLUMN_IS_ON + " INTEGER," +
+                COLUMN_MONDAY + " INTEGER," +
+                COLUMN_TUESDAY + " INTEGER," +
+                COLUMN_WEDNESDAY + " INTEGER," +
+                COLUMN_THURSDAY + " INTEGER," +
+                COLUMN_FRIDAY + " INTEGER," +
+                COLUMN_SATURDAY + " INTEGER," +
+                COLUMN_SUNDAY + " INTEGER," +
+                COLUMN_TITLE + " TEXT," +
+                COLUMN_CHALLENGE_TYPE + " INTEGER)");
     }
 
     /**
@@ -86,7 +87,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 

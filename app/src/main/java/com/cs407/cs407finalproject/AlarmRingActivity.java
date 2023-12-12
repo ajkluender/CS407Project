@@ -1,23 +1,15 @@
 package com.cs407.cs407finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.FragmentContainerView;
-
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
 import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
-
 import java.util.Calendar;
 
 /**
@@ -28,9 +20,9 @@ public class AlarmRingActivity extends AppCompatActivity {
 
     Alarm alarm;
     String title = "";
-    int alarmId = 0;
+    int alarmId;
     int challengeType = -1;
-    boolean isRecurring = false;
+    boolean isRecurring;
     private static final String CHANNEL_ID = "AlarmServiceChannel";
 
     /**

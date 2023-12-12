@@ -4,13 +4,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,10 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.cs407.cs407finalproject.data.Alarm;
 import com.cs407.cs407finalproject.data.AlarmDBHelper;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -85,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the button to add a new button
+     * Sets up the button to add a new alarm
      */
     private void setupAddAlarmButton() {
         Button addAlarm = findViewById(R.id.addAlarm);
@@ -99,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Refresh the alarm list after a change has been made
      */
     private void refreshAlarmList() {
         alarmsList.clear();
@@ -108,48 +101,34 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> displayList = new ArrayList<>();
         for (Alarm alarm : alarmsList) {
-            String displayText = formatAlarmForDisplay(alarm);
-            displayList.add(displayText);
+            //String displayText = formatAlarmForDisplay(alarm);
+            displayList.add(alarm.toString());
         }
         adapter.clear();
         adapter.addAll(displayList);
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     *
-     * @param alarm
-     * @return
-     */
-    private String formatAlarmForDisplay(Alarm alarm) {
-        String title = "untitled";
-        if (alarm.getTitle().length() > 0) {
-            title = alarm.getTitle();
-        }
-        if (alarm.isOn()) {
-            return "[ON] " + alarm.getHour() + ":" + String.format("%02d", alarm.getMinute())
-                    + " - " + title;
-        }
-        return "[OFF] " + alarm.getHour() + ":" + String.format("%02d", alarm.getMinute())
-                + " - " + title;
-    }
+//    private String formatAlarmForDisplay(Alarm alarm) {
+//        String title = "untitled";
+//        if (alarm.getTitle().length() > 0) {
+//            title = alarm.getTitle();
+//        }
+//        if (alarm.isOn()) {
+//            return "[ON] " + alarm.getHour() + ":" + String.format("%02d", alarm.getMinute())
+//                    + " - " + title;
+//        }
+//        return "[OFF] " + alarm.getHour() + ":" + String.format("%02d", alarm.getMinute())
+//                + " - " + title;
+//    }
 
     /**
-     *
+     * Sorts all alarms by comparing their hours and minutes
      */
     private void sortAlarms() {
-        Collections.sort(alarmsList, (a1, a2) -> {
-            int hourCompare = Integer.compare(a1.getHour(), a2.getHour());
-            if (hourCompare == 0) {
-                return Integer.compare(a1.getMinute(), a2.getMinute());
-            }
-            return hourCompare;
-        });
+        Collections.sort(alarmsList);
     }
 
-    /**
-     *
-     */
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if(!isGranted) {
@@ -158,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
     /**
-     *
+     * Requests all needed permissions (notifications)
      */
     private void requestPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
