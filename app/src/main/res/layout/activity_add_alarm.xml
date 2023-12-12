@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddAlarmActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/alarmName"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Name Your Alarm"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp" />
+
+        <TimePicker
+            android:id="@+id/timePickerUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            android:layout_gravity="center" />
+
+        <CheckBox
+            android:id="@+id/enableAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable Alarm" />
+
+        <CheckBox
+            android:id="@+id/recurringAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recurring Alarm" />
+
+        <LinearLayout
+            android:id="@+id/recurringDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkSun"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="SUN"
+                android:textSize="12dp" />
+
+            <CheckBox
+                android:id="@+id/checkMon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="MON"
+                android:textSize="12dp" />
+
+            <CheckBox
+                android:id="@+id/checkTue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="TUE"
+                android:textSize="12dp" />
+
+            <CheckBox
+                android:id="@+id/checkWed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="WED"
+                android:textSize="12dp" />
+
+            <CheckBox
+                android:id="@+id/checkThu"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="THU"
+                android:textSize="12dp" />
+
+            <CheckBox
+                android:id="@+id/checkFri"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="FRI"
+                android:textSize="12dp" />
+
+            <CheckBox
+                android:id="@+id/checkSat"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="SAT"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/addChallenge"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:text="Add Challenge" />
+
+        <RadioGroup
+            android:id="@+id/allChallenges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Addition"
+                android:textSize="16dp"/>
+
+            <RadioButton
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Multiplication"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sequence"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Square"
+                android:textSize="16dp" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Save Alarm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintVertical_bias="0.627" />
+
+    <Button
+        android:id="@+id/deleteAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Alarm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.187"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintVertical_bias="0.627" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
