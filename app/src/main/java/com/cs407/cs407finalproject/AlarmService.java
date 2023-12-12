@@ -111,8 +111,6 @@ public class AlarmService extends Service {
      * Makes a notification channel
      */
     private void createNotificationChannel() {
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);

@@ -23,12 +23,12 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
+
             if ((!intent.getBooleanExtra("RECURRING", false)
                     || alarmIsToday(intent))
                     && intent.getBooleanExtra("IS_ON", true)) {
                 startAlarmService(context, intent);
             }
-
     }
 
     /**
@@ -69,7 +69,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         serviceIntent.putExtra("ALARM_ID", intent.getIntExtra("ALARM_ID", 0));
         serviceIntent.putExtra("CHALLENGE", intent.getIntExtra("CHALLENGE", 0));
         serviceIntent.putExtra("RECURRING", intent.getBooleanExtra("RECURRING", false));
-
         context.startService(serviceIntent);
     }
 }

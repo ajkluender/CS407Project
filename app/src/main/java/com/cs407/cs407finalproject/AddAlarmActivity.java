@@ -157,7 +157,6 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
         });
     }
-
     /**
      * Puts an alarm into the UI
      *

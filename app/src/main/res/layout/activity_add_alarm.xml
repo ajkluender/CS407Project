@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Name Your Alarm"
-            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_marginTop="32dp" />
@@ -37,7 +36,6 @@
             android:id="@+id/enableAlarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:text="Enable Alarm" />
 
         <CheckBox
